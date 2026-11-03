@@ -2,7 +2,62 @@
 
 ## this workflow is based on https://f1000research.com/articles/5-1408
 
-## install software
+## ID conversion with local org.db packages (offline)
+
+```R
+
+# Bioconductor provides "org.<Species>.eg.db" annotation packages.
+# They store curated gene ID mappings (Entrez, Symbol, Ensembl, exon,
+# chromosome, ...) as a local database - everything runs offline,
+# no Ensembl web service and no biomaRt needed.
+
+# common packages:
+#   org.Hs.eg.db -> human        org.Rn.eg.db -> rat
+#   org.Mm.eg.db -> mouse        org.Dr.eg.db -> zebrafish
+#   (many more; see the Bioconductor annotation database page)
+
+# install the mouse database (once)
+BiocManager::install("org.Mm.eg.db")
+
+# load the database
+library(org.Mm.eg.db)
+
+# what ID types (key types) can I use for input / lookup?
+keytypes(org.Mm.eg.db)
+# e.g. "ENTREZID", "SYMBOL", "EXON", "CHR", "TXCHROM", "GENENAME", ...
+# (plus Ensembl IDs in newer releases)
+
+# which annotation columns exist in the database?
+columns(org.Mm.eg.db)
+
+# select() = the main workhorse:
+#   keys    = your input IDs
+#   keytype = the type of your input IDs
+#   columns = what you want back (one or more)
+genes <- select(org.Mm.eg.db,
+                keys = c("497097", "19888", "20671"),
+                columns = c("SYMBOL", "PMID", "ENTREZID"),
+                keytype = "ENTREZID")
+head(genes)
+
+# select() can return several rows per key (1:many mappings),
+# which is why we later deduplicate with duplicated().
+
+# mapIds() = exactly one output value per input (no table explosion);
+# multiple matches are joined with the `sep` argument (default "; ")
+syms <- mapIds(org.Mm.eg.db,
+               keys = c("497097", "19888", "20671"),
+               column = "SYMBOL",
+               keytype = "ENTREZID")
+
+# works in any direction, e.g. SYMBOL -> ENTREZID:
+select(org.Mm.eg.db, keys = c("Sox17", "Mrpl15"),
+       columns = "ENTREZID", keytype = "SYMBOL")
+
+# note: the Mus.musculus package we use later in class
+# is a thin wrapper around this same local database (org.Mm.eg.db)
+
+## install and load
 
 ```R
 
