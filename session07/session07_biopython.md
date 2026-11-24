@@ -2,6 +2,12 @@
 
 ## Installing and loading the Biopython library
 
+# addend biosw modules to .bashrc
+```bash
+export MODULEPATH=/beegfs/biosw/module
+module use --append /beegfs/biosw/modules/
+```
+
 ```bash
 pip3 install biopython
 ```
