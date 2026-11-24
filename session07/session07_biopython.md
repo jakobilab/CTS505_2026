@@ -101,7 +101,6 @@ for record in records:
    print("Description: %s" % record.description) 
    print("Annotations: %s" % record.annotations) 
    print("Sequence Data: %s" % record.seq) 
-   print("Sequence Alphabet: %s" % record.alphabet)
 ```
 
 ### GBK file (GenBank), includes detailed annotations
@@ -120,7 +119,6 @@ for record in records:
    print("Description: %s" % record.description) 
    print("Annotations: %s" % record.annotations) 
    print("Sequence Data: %s" % record.seq) 
-   print("Sequence Alphabet: %s" % record.alphabet)
 ```
 
 
