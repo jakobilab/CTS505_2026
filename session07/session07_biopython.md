@@ -91,7 +91,7 @@ from Bio.SeqIO import parse
 from Bio.SeqRecord import SeqRecord 
 from Bio.Seq import Seq 
 
-file = open("ls_orchid.fasta") 
+file = open("/tmp/sequence.fasta") 
 
 records = parse(file, "fasta")
 
@@ -109,7 +109,7 @@ from Bio.SeqIO import parse
 from Bio.SeqRecord import SeqRecord 
 from Bio.Seq import Seq 
 
-file = open("ls_orchid.gbk") 
+file = open("/tmp/sequence.gb") 
 
 records = parse(file, "genbank")
 
@@ -135,7 +135,7 @@ from Bio.Graphics import GenomeDiagram
 from Bio import SeqIO
 
 # directly read GenBank file
-record = SeqIO.read("NC_005816.gb", "genbank")
+record = SeqIO.read("/tmp/NC_005816.gb", "genbank")
 
 # get a first idea of the file contents
 print(record)
